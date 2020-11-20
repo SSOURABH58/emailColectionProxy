@@ -11,6 +11,8 @@ const dowbtn = document.querySelector('.dowbtn')
 let csvdata
 const downloadbtn = document.createElement('button')
 downloadbtn.innerText='download'
+const clearbtn = document.createElement('button')
+clearbtn.innerText='cleardb'
 
 const objtocsv = (obj)=>{
     const csvros = []
@@ -60,6 +62,7 @@ passenter.addEventListener('click',e=>{
             csvdata = objtocsv(data)
             console.log(csvdata)
             dowbtn.appendChild(downloadbtn)
+            dowbtn.appendChild(clearbtn)
             })
     passwordbox.value=''
 })
@@ -77,3 +80,18 @@ inputbtn.addEventListener('click',e=>{
 })
 
 downloadbtn.addEventListener('click',()=>download(csvdata))
+clearbtn.addEventListener('click',e=>{
+    e.preventDefault();
+    const opc={
+        method : 'POST',
+        headers : {
+            'Content-Type':'application/json'
+        },
+        body : JSON.stringify({pass:passwordbox.value})
+    }
+    fetch('/clear',opc)
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            })
+    passwordbox.value=''})

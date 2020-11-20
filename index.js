@@ -16,7 +16,7 @@ app.use(express.json({ limit: '1mb' }))
 const database=new DataStore('database.db')
 database.loadDatabase()
 
-app.use(cors({origin: ['http://localhost:3000']}))
+app.use(cors({origin: ['http://soul-manifestation.tk']}))
 
 app.post('/colectemail', (req, res)=> {
     database.insert(req.body)
@@ -30,3 +30,14 @@ app.post('/getemails',(req,res)=>{
     console.log("res send")
   }
 })
+
+app.post('/clear',(req,res)=>{
+  if(req.body.pass===process.env.PASSWORD){
+    database.remove({}, { multi: true }, function (err, numRemoved) {
+      res.send(JSON.stringify({numRemoved}))
+    });
+    console.log("db clear")
+  }
+})
+
+
