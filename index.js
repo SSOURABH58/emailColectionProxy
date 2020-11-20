@@ -16,7 +16,7 @@ app.use(express.json({ limit: '1mb' }))
 const database=new DataStore('database.db')
 database.loadDatabase()
 
-app.use(cors({origin: ['http://soul-manifestation.tk']}))
+app.use(cors({origin: ['http://soul-manifestation.tk','https://soul-manifestation.tk/']}))
 
 app.post('/colectemail', (req, res)=> {
     database.insert(req.body)
